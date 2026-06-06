@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BankSmart AI — Your Banking & Financial Assistant</title>
+  <meta name="description" content="BankSmart AI is an intelligent Indian banking chatbot powered by Google Gemini. Get instant answers about loans, UPI, CIBIL score, FD, mutual funds, repo rate, GDP, and more." />
+  <meta name="keywords" content="banking chatbot, AI finance assistant, UPI help, CIBIL score, home loan, mutual funds, India banking" />
+  <meta property="og:title" content="BankSmart AI — Your Banking & Financial Assistant" />
+  <meta property="og:description" content="Instant answers to all your banking and finance questions, powered by AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">🏦</div>
+        <div class="logo-text">
+          <span class="logo-name">BankSmart</span>
+          <span class="logo-tag">AI</span>
+        </div>
+      </div>
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">✕</button>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Quick Topics</h3>
+      <div class="topic-grid">
+        <button class="topic-btn" data-msg="Tell me about home loans" id="topic-home-loan">🏠 Home Loan</button>
+        <button class="topic-btn" data-msg="How does UPI work?" id="topic-upi">📱 UPI</button>
+        <button class="topic-btn" data-msg="What is CIBIL score?" id="topic-cibil">📊 CIBIL</button>
+        <button class="topic-btn" data-msg="Tell me about Fixed Deposits" id="topic-fd">🏦 Fixed Deposit</button>
+        <button class="topic-btn" data-msg="What are mutual funds and SIP?" id="topic-mf">📈 Mutual Funds</button>
+        <button class="topic-btn" data-msg="What is the current repo rate?" id="topic-repo">🏛️ Repo Rate</button>
+        <button class="topic-btn" data-msg="What is India's GDP?" id="topic-gdp">🇮🇳 GDP</button>
+        <button class="topic-btn" data-msg="Explain income tax slabs" id="topic-tax">💼 Income Tax</button>
+        <button class="topic-btn" data-msg="What is term insurance?" id="topic-insurance">🛡️ Insurance</button>
+        <button class="topic-btn" data-msg="How to improve credit score?" id="topic-credit">⬆️ Credit Score</button>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Session Info</h3>
+      <div class="session-info">
+        <div class="info-row"><span>Session ID</span><code id="sessionDisplay">—</code></div>
+        <div class="info-row"><span>Messages</span><span id="msgCount">0</span></div>
+        <div class="info-row"><span>DB Status</span><span id="dbStatus" class="status-dot">Connecting…</span></div>
+      </div>
+      <button class="btn-clear" id="clearChat">🗑️ Clear Chat</button>
+    </div>
+
+    <div class="sidebar-footer">
+      <p>Powered by</p>
+      <div class="powered-by">
+        <span class="badge">Google Gemini</span>
+        <span class="badge">MongoDB</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main" id="main">
+    <!-- Header -->
+    <header class="chat-header">
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="header-brand">
+        <span class="header-icon">🏦</span>
+        <div>
+          <h1 class="header-title">BankSmart AI</h1>
+          <p class="header-subtitle">Your Indian Banking & Finance Assistant</p>
+        </div>
+      </div>
+      <div class="header-status">
+        <div class="pulse-dot"></div>
+        <span>Online</span>
+      </div>
+    </header>
+
+    <!-- Chat Area -->
+    <section class="chat-area" id="chatArea" aria-live="polite" aria-label="Chat messages">
+      <!-- Welcome card -->
+      <div class="welcome-card" id="welcomeCard">
+        <div class="welcome-icon">🏦</div>
+        <h2>Welcome to BankSmart AI!</h2>
+        <p>Your intelligent Indian banking and financial advisor. Ask me anything about loans, UPI, credit scores, investments, and more!</p>
+        <div class="welcome-chips">
+          <button class="chip" data-msg="What can you help me with?" id="chip-help">💡 What can you do?</button>
+          <button class="chip" data-msg="Tell me about home loans" id="chip-loan">🏠 Home Loans</button>
+          <button class="chip" data-msg="How does UPI work?" id="chip-upi">📱 UPI Guide</button>
+          <button class="chip" data-msg="How to improve credit score?" id="chip-cibil">📊 CIBIL Score</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typing Indicator -->
+    <div class="typing-indicator" id="typingIndicator" hidden>
+      <div class="bot-avatar">🤖</div>
+      <div class="typing-bubble">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+      <span class="typing-text">BankSmart AI is thinking…</span>
+    </div>
+
+    <!-- Input Area -->
+    <div class="input-area">
+      <div class="input-wrapper">
+        <textarea
+          id="userInput"
+          placeholder="Ask me about loans, UPI, CIBIL score, mutual funds…"
+          rows="1"
+          maxlength="1000"
+          autocomplete="off"
+          aria-label="Message input"
+        ></textarea>
+        <button class="send-btn" id="sendBtn" aria-label="Send message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/>
+          </svg>
+        </button>
+      </div>
+      <p class="input-hint">Press <kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for new line · Powered by Google Gemini AI</p>
+    </div>
+  </main>
+
+  <!-- ── OVERLAY ── -->
+  <div class="overlay" id="overlay"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
