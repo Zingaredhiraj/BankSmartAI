@@ -49,7 +49,12 @@ app.get('*', (_req, res) =>
 );
 
 // ── Start ─────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`🚀  BankSmart AI server running → http://localhost:${PORT}`);
-  console.log(`📡  API endpoint              → http://localhost:${PORT}/api/chat`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀  BankSmart AI server running → http://localhost:${PORT}`);
+    console.log(`📡  API endpoint              → http://localhost:${PORT}/api/chat`);
+  });
+}
+
+module.exports = app;
+
