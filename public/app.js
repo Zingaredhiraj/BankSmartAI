@@ -195,7 +195,7 @@
     }
 
     const msgStack = document.createElement('div');
-    msgStack.style.cssText = 'display:flex;flex-direction:column;max-width:75%;min-width:0;';
+    msgStack.className = 'msg-stack';
     if (isUser) msgStack.style.alignItems = 'flex-end';
     msgStack.appendChild(bubble);
     msgStack.appendChild(meta);
